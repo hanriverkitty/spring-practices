@@ -3,6 +3,7 @@ package com.poscodx.hellospring.controller;
 import java.io.IOException;
 import java.io.Writer;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -52,8 +53,10 @@ public class HelloController {
 	
 	//안좋은 예제
 	@RequestMapping("/hello7")
-	public void hello7(HttpServletResponse response,Writer out) throws IOException{
+	public void hello7(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Writer out) throws IOException {
 		response.getWriter().print("<h1>Hello World</h1>");
-		
 	}
 }
