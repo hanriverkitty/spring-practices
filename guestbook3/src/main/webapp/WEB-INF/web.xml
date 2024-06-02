@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-	<display-name>emaillist3</display-name>
+	<display-name>guestbook3</display-name>
 
 	<!-- Context Parameters -->
 	<context-param>
@@ -47,7 +47,7 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<!-- default files -->
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -56,5 +56,4 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	
 </web-app>

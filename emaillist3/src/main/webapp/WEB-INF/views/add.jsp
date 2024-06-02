@@ -14,7 +14,7 @@
 		메일 리스트에 가입하려면,<br>
 		아래 항목을 기입하고 submit 버튼을 클릭하세요.
 	</p>
-	<!--  ${pageContext.request.contextPath}/el?a=add 라고 쓰면 get 방식 -->
+	<!--  ${pageContext.request.contextPath}/add/${ } 라고 쓰면 get 방식 -->
 	<form action="${pageContext.request.contextPath}/add" method="post">
 	<!-- url을 깔끔하게 하기 위해 post 방식 -->
 	    First name: <input type="text" name="firstName" value="" ><br>
