@@ -25,6 +25,11 @@
 		<constructor-arg index="0" ref="dataSource" />
 	</bean>
 	
+	<!-- Transaction Manager -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<constructor-arg index="0" ref="dataSource" />
+	</bean>
+	
 	<!--- 
 	Jdbc Template
 	<bean id="JdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">

@@ -1,11 +1,17 @@
 package com.poscodx.guestbook3.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.poscodx.guestbook3.repository.GuestbookLogRepository;
@@ -14,6 +20,12 @@ import com.poscodx.guestbook3.vo.GuestbookVo;
 
 @Service
 public class GuestbookService {
+	
+	@Autowired
+	private DataSource dataSource;
+	
+	@Autowired
+	private PlatformTransactionManager transactionManager;
 	
 	@Autowired
 	private GuestbookRepositoryWithJdbcContext guestbookRepository;
@@ -25,16 +37,47 @@ public class GuestbookService {
 		return guestbookRepository.findAll();
 	}
 	public int deleteContents(Long no, String password) {
+		int result=0;
+		// TX:BEGIN ///////////////////////////////
+		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+		try {
 		guestbookLogRepository.update(no);
-		return guestbookRepository.deleteByNo(no, password);
+		result = guestbookRepository.deleteByNo(no, password);
+		
+		// TX:END(SUCCESS) ///////////////////////
+		transactionManager.commit(status);
+		} catch(Throwable e) {
+			// TX:END(FAIL) ///////////////////////
+			transactionManager.rollback(status);
+		}
+		return result;
 	}
 	public void addContents(GuestbookVo vo) {
+		// 트랜잭션 동기화 (Connection) 초기화
 		TransactionSynchronizationManager.initSynchronization();
 		Connection conn = DataSourceUtils.getConnection(dataSource);
-		int count = guestbookLogRepository.update();
-		if(count == 0) {
-			guestbookLogRepository.insert();
+		try {
+			// TX:BEGIN ///////////////////////////////
+			conn.setAutoCommit(false);
+			int count = guestbookLogRepository.update();
+			if(count == 0) {
+				guestbookLogRepository.insert();
+			}
+			guestbookRepository.insert(vo);
+			
+			// TX:END(SUCCESS) ///////////////////////
+			conn.commit();
+		}catch(Throwable e) {
+			// TX:END(FAIL) //////////////////////////
+			try {
+				conn.rollback();
+			} catch(SQLException ignored) {
+				
+			} finally {
+				DataSourceUtils.releaseConnection(conn, dataSource);
+			}
+			
 		}
-		guestbookRepository.insert(vo);
+		
 	}
 }

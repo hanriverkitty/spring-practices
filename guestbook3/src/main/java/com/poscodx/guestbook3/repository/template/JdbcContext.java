@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 
 public class JdbcContext {
 	private DataSource dataSource;
@@ -59,21 +60,20 @@ public class JdbcContext {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			conn = dataSource.getConnection();
+			conn =  DataSourceUtils.getConnection(dataSource);
 			pstmt = statementStrategy.makeStatement(conn);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new RuntimeException(e);
 		} finally {
 			try {
 				if (pstmt != null) {
 					pstmt.close();
 				}
 				if (conn != null) {
-					conn.close();
+					DataSourceUtils.releaseConnection(conn, dataSource);
 				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
+			} catch (SQLException ignored) {
 			}
 		}
 		return result;
@@ -85,7 +85,7 @@ public class JdbcContext {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			conn = dataSource.getConnection();
+			conn =  DataSourceUtils.getConnection(dataSource);
 			pstmt = statementStrategy.makeStatement(conn);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -93,17 +93,16 @@ public class JdbcContext {
 				result.add(e);
 			}
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new RuntimeException(e);
 		} finally {
 			try {
 				if (pstmt != null) {
 					pstmt.close();
 				}
 				if (conn != null) {
-					conn.close();
+					DataSourceUtils.releaseConnection(conn, dataSource);
 				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
+			} catch (SQLException ignored) {
 			}
 		}
 		return result;
