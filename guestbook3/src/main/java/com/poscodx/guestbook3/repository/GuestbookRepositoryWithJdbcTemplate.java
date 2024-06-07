@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.poscodx.guestbook3.vo.GuestbookVo;
 
-@Repository
+// @Repository
 public class GuestbookRepositoryWithJdbcTemplate {
 	private JdbcTemplate jdbcTemplate;
 	

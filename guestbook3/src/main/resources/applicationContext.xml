@@ -25,13 +25,15 @@
 		<constructor-arg index="0" ref="dataSource" />
 	</bean>
 	
-	<!-- Jdbc Template -->
+	<!--- 
+	Jdbc Template
 	<bean id="JdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<constructor-arg index="0" ref="dataSource" />
 	</bean>
+	-->
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.poscodx.guestbook3.repository">
+	<context:component-scan base-package="com.poscodx.guestbook3.repository, com.poscodx.guestbook3.service">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />			
