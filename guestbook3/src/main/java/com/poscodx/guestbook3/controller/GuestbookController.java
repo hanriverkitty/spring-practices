@@ -16,10 +16,7 @@ import com.poscodx.guestbook3.repository.GuestbookRepositoryWithRawJdbc;
 import com.poscodx.guestbook3.vo.GuestbookVo;
 
 @Controller
-public class GuestbookController {
-	@Autowired
-	private GuestbookRepositoryWithRawJdbc guestbookRepository1;
-	
+public class GuestbookController {	
 	// findAll() 안됨
 	@Autowired
 	private GuestbookRepositoryWithJdbcContext guestbookRepository2;
@@ -29,7 +26,7 @@ public class GuestbookController {
 	
 	@RequestMapping("/")
 	public String index(Model model) {
-		List<GuestbookVo> list = guestbookRepository3.findAll();
+		List<GuestbookVo> list = guestbookRepository2.findAll();
 		model.addAttribute("list",list);
 		return "index";
 		
@@ -37,7 +34,7 @@ public class GuestbookController {
 	
 	@RequestMapping("/add")
 	public String add(GuestbookVo vo) {
-		guestbookRepository3.insert(vo);
+		guestbookRepository2.insert(vo);
 		return "redirect:/";
 	}
 	
@@ -49,7 +46,7 @@ public class GuestbookController {
 	
 	@RequestMapping(value="/delete/{no}",method=RequestMethod.POST)
 	public String delete(@PathVariable("no")Long no,@RequestParam(value="password",required=true) String password) {
-		int result = guestbookRepository3.deleteByNo(no, password);
+		int result = guestbookRepository2.deleteByNo(no, password);
 		if(result==1) {
 			return "redirect:/";
 		}else {
