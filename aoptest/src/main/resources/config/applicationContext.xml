@@ -13,36 +13,11 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-	<!-- Transaction AOP Proxy -->
-	<tx:annotation-driven/>
-	
-	<!-- Connection Pool DataSource-->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-		<property name="url" value="jdbc:mariadb://192.168.0.197:3306/webdb?charset=utf8" />
-		<property name="username" value="webdb" />
-		<property name="password" value="webdb" />
-	</bean>
-	
-	<!-- JdbcContext -->
-	<bean id="jdbcContext" class="com.poscodx.guestbook3.repository.template.JdbcContext">
-		<constructor-arg index="0" ref="dataSource" />
-	</bean>
-	
-	<!-- Transaction Manager -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<constructor-arg index="0" ref="dataSource" />
-	</bean>
-	
-	<!--- 
-	Jdbc Template
-	<bean id="JdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<constructor-arg index="0" ref="dataSource" />
-	</bean>
-	-->
+	<!-- auto proxy -->
+	<aop:aspectj-autoproxy/>
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.poscodx.guestbook3.repository, com.poscodx.guestbook3.service">
+	<context:component-scan base-package="com.poscodx.aoptest.service, com.poscodx.aoptest.aspect">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />			
