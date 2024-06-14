@@ -68,8 +68,6 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>
