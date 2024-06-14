@@ -22,7 +22,7 @@ public class GuestbookRepositoryWithJdbcContext {
 	}
 	
 	public List<GuestbookVo> findAll() {
-		return jdbcContext.query(
+		return jdbcContext.queryForList(
 				"select no, name, password,contents, date_format(reg_date, '%Y-%m-%d %T') from guestbook order by reg_date desc", 
 				new RowMapper<GuestbookVo>() {
 					@Override

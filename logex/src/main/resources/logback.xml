@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
 <configuration>
-
 	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<charset>UTF-8</charset>
@@ -63,8 +63,7 @@
     </logger>    
 	
 	<!-- 루트(글로벌) 로거 -->
-	<root level="info">
+	<root level="debug">
 		<appender-ref ref="consoleAppender" />
 	</root>
-
 </configuration>
