@@ -69,7 +69,6 @@
 			<version>${logback.version}</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<finalName>logex</finalName>
 	</build>
