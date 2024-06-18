@@ -1,5 +1,6 @@
 package com.poscodx.container.videosystem;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Disabled;
@@ -57,6 +58,28 @@ public class DVDPlayerXmlConfigTest {
 	@Qualifier("avengersExpansionEdition3")
 	DigitalVideoDisc dvd10;
 	
+	@Autowired
+	@Qualifier("dvdPlayer1")
+	DVDPlayer dvdPlayer1;
+	
+	@Autowired
+	@Qualifier("dvdPlayer2")
+	DVDPlayer dvdPlayer2;
+	
+	@Autowired
+	@Qualifier("dvdPlayer3")
+	DVDPlayer dvdPlayer3;
+	
+	@Autowired
+	@Qualifier("dvdPlayer4")
+	DVDPlayer dvdPlayer4;
+	
+	@Autowired
+	@Qualifier("dvdPlayer5")
+	DVDPlayer dvdPlayer5;
+	
+////////////////////////////////////////////////////////////////
+	
 	@Disabled
 	@Test
 	public void testDVD1() {
@@ -112,4 +135,30 @@ public class DVDPlayerXmlConfigTest {
 	public void testDVD10() {
 		assertNotNull(dvd10);
 	}
+	
+	@Test
+	public void testPlay1() {
+		assertEquals("Playing Movie : Marvel's IronMan",dvdPlayer1.play());
+	}
+	
+	@Test
+	public void testPlay2() {
+		assertEquals("Playing Movie : Marvel's IronMan",dvdPlayer2.play());
+	}
+	
+	@Test
+	public void testPlay3() {
+		assertEquals("Playing Movie : Marvel's IronMan",dvdPlayer3.play());
+	}
+	
+	@Test
+	public void testPlay4() {
+		assertEquals("Playing Movie : Marvel's IronMan",dvdPlayer4.play());
+	}
+	
+	@Test
+	public void testPlay5() {
+		assertEquals("Playing Movie : Marvel's IronMan",dvdPlayer5.play());
+	}
+	
 }
