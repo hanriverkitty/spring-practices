@@ -4,6 +4,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:c="http://www.springframework.org/schema/c"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -21,27 +22,107 @@
 	<!--  02. 빈설정: id 부여하기 -->
 	<bean id="ironMan" class ="com.poscodx.container.videosystem.IronMan"/>
 	
-	<!--  03. 빈설정: 생성자 리터럴 사용1 -->
+	<!--  03. 빈설정: 생성자: 리터럴 사용1 -->
 	<bean id="avengersInfinityWar" class="com.poscodx.container.videosystem.BlankDisc">
 		<!-- 파라미터 이름을 전하므로써 애매함을 없앤다 -->
 		<constructor-arg name="title" value="Avengers Infinity War"/>
 		<constructor-arg name="studio" value="Marvel"/>	
 	</bean>
 	
-	<!--  04. 빈설정: 생성자 리터럴 사용2 (많이 쓰인다) -->
+	<!--  04. 빈설정: 생성자: 리터럴 사용2 (많이 쓰인다) -->
 	<bean 
 		id="avengersEndGame" 
 		class="com.poscodx.container.videosystem.BlankDisc"
 		c:title="Avengers End Game"
 		c:studio="Marvel"/>
 		
-	<!--  05. 빈설정: 생성자 리터럴 사용3 -->
+	<!--  05. 빈설정: 생성자: 리터럴 사용3 -->
 	<bean 
 		id="avengersAgeOfUltron" 
 		class="com.poscodx.container.videosystem.BlankDisc"
 		c:_0="Avengers Age Of Ultron"
 		c:_1="Marvel"/>
 		
+	<!--  06. 빈설정: 생성자: null argument -->
+	<bean id="avengersCaptainAmerica" class="com.poscodx.container.videosystem.BlankDisc">
+		<!-- 파라미터 이름을 전하므로써 애매함을 없앤다 -->
+		<constructor-arg name="title" value="Avengers Captain America"/>
+		<constructor-arg name="studio" value="Marvel"/>	
+		<!-- null이 들어가야 한다면 속성에 값을 주지 말고 null 태그를 이용해서 주자 -->
+		<constructor-arg name="actors"><null/></constructor-arg>	
+	</bean>
 	
+	<!--  07. 빈설정: 생성자: collection argument -->
+	<bean id="avengersDirectorEdition" class="com.poscodx.container.videosystem.BlankDisc">
+		<!-- 파라미터 이름을 전하므로써 애매함을 없앤다 -->
+		<constructor-arg name="title" value="Avengers Director Edition"/>
+		<constructor-arg name="studio" value="Marvel"/>	
+		<constructor-arg name="actors">
+			<list>
+				<value>Robert Downi Junior</value>
+				<value>Chris Evans</value>
+			</list>
+		</constructor-arg>	
+	</bean>
+	
+	<!--  08. 빈설정: 생성자: wiring collection (빈들을 가지고 있는 리스트를 가지는 빈) -->
+	<bean 
+		id="avengersTriplePack" 
+		class="com.poscodx.container.videosystem.DVDPack"
+		c:title='Avengers Triple Pack'>
+		<constructor-arg name="dvds">
+			<list>
+				<ref bean="avengersEndGame"/>
+				<ref bean="avengersInfinityWar"/>
+				<ref bean="ironMan"/>
+			</list>
+		</constructor-arg>	
+	</bean>
+	
+	<!--  09. 빈설정: 프로퍼티 사용1 -->
+	<bean id="avengersExpansionEdition1" class="com.poscodx.container.videosystem.BlankDisc">
+		<!-- setter가 필요하다 -->
+		<property name="title" value="Avengers Expansion Edition1"/>
+		<property name="studio" value="Marvel"/>	
+	</bean>
+	
+	<!--  10. 빈설정: 프로퍼티 사용2 -->
+	<bean 
+		id="avengersExpansionEdition2" 
+		class="com.poscodx.container.videosystem.BlankDisc"
+		p:title="Avengers Expansion Edition2"
+		p:studio="Marvel">
+		<!-- property 태그를 통해 명시 -->
+		<property name="actors">
+			<list>
+				<value>Robert Downi Junior</value>
+				<value>Chris Evans</value>
+			</list>
+		</property>	
+	</bean>
+	
+	<!--  11. 빈설정: 프로퍼티 사용3 -->
+	<!-- bean 속성안에 리스트를 추가하고 싶스면 util을 이용해서 임시빈을 만든 후 임시빈의 아이디값을 적어준다 -->
+	<util:list id="actorList">
+		<value>Robert Downi Junior</value>
+			<value>Chris Evans</value>
+	</util:list>
+	<bean 
+		id="avengersExpansionEdition3" 
+		class="com.poscodx.container.videosystem.BlankDisc"
+		p:title="Avengers Expansion Edition3"
+		p:studio="Marvel"
+		p:actors-ref="actorList">
+	</bean>
+	
+	<!--  12. 빈주입: 생성자 주입1 -->
+	
+	<!--  13. 빈주입: 생성자 주입2 -->
+	
+	<!--  14. 빈주입: 생성자 주입3 -->
+	
+	<!--  15. 빈주입: 프로퍼티 주입1 -->
+	
+	<!--  16. 빈주입: 프로퍼티 주입2 -->
 </beans>
  
