@@ -6,7 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>${'Hello World: JSP(JSTL/EL) View' }</h1>
+	<h1>[[${'Hello World: JSP(JSTL/EL) View' }]]</h1>
 	
 	
 	<div style="padding-top: 100px">
