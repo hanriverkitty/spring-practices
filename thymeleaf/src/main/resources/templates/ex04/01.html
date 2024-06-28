@@ -6,8 +6,8 @@
 </head>
 <body>
 	<h4>Loop01: th:each: basics</h4>
-	<ul th:each="vo: ${list}">
-		<li>[[${vo.no}]]:[[${vo.name}]]</li>
+	<ul>
+		<li th:each="vo: ${list}">[[${vo.no}]]:[[${vo.name}]]</li>
 	</ul>
 
 
